@@ -1,0 +1,17 @@
+#! /usr/bin/env bash
+set -e
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+cd $DIR
+cd ..
+
+. ./env/bin/activate
+
+cd project
+
+python setup.py sdist bdist_wheel
+python -m twine upload dist/*
+
+EXIT_CODE=$?
+deactivate
+exit $EXIT_CODE

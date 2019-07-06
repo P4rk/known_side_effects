@@ -1,7 +1,7 @@
 # Known Side Effects
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/393832636c36453eb382b56b4f6dcb0f)](https://www.codacy.com/app/P4rk/known_side_effects?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=P4rk/known_side_effects&amp;utm_campaign=Badge_Grade)
-![Codacy Badge](https://github.com/P4rk/known_side_effects/blob/master/coverage.svg)
+[![Coverage Badge](https://img.shields.io/badge/coverage-95%25-lgreen.svg)](https://shields.io/)
 [![Python version badge](https://img.shields.io/badge/python-3.6+-blue.svg)](https://shields.io/)
 [![Licence badge](https://img.shields.io/badge/license-MIT-green.svg)](https://shields.io/)
 
