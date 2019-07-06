@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+. ./env/bin/activate
+coverage report
+EXIT_CODE=$?
+deactivate
+exit $EXIT_CODE

@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+. ./env/bin/activate
+export PYTHONPATH=project
+coverage run $(which py.test)
+EXIT_CODE=$?
+deactivate
+exit $EXIT_CODE

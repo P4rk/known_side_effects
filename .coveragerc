@@ -1,0 +1,10 @@
+[run]
+source = project
+omit =
+    ./env/**
+branch = true
+
+[report]
+fail_under = 85
+omit=
+    ./env/**
