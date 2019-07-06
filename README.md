@@ -5,7 +5,7 @@
 A test utility library to help write explict sideffects for mocked objects.
 
 ## Basic example
-```
+```python
 from unittest.mock import Mock
 from known_side_effects.types import given
 
