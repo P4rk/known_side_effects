@@ -1,6 +1,9 @@
 #! /usr/bin/env bash
 . ./env/bin/activate
 coverage report
+coverage xml
+rm coverage.svg
+coverage-badge -o coverage.svg
 EXIT_CODE=$?
 deactivate
 exit $EXIT_CODE
