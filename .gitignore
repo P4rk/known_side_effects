@@ -2,3 +2,6 @@
 .*
 env/**
 wenv/**
+project/build/**
+project/dist/**
+**/*egg-info/**
