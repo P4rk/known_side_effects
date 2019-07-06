@@ -1,6 +1,6 @@
 from parameterized import parameterized
 
-from known_side_effects.matchers.types import (
+from known_side_effects import (
     Any,
     NotNone,
     AnyString,

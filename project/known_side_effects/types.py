@@ -21,29 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-from unittest.mock import Mock
-
 from known_side_effects.exceptions import UnmatchedArguments
 from known_side_effects.matchers.parameter_matchers import (
     match_arguments,
     match_kwarg,
 )
-
-mock_to_seg = dict()
-
-
-def given(mock: Mock):
-    global mock_to_seg
-    seg = mock_to_seg.get(mock, SideEffectGenerator())
-    mock.side_effect = seg
-    mock_to_seg[mock] = seg
-    return seg
-
-
-def reset(mock: Mock):
-    global mock_to_seg
-    seg = mock_to_seg[mock]
-    seg.whens = []
 
 
 class SideEffectGenerator:

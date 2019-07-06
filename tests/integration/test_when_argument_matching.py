@@ -3,9 +3,9 @@ from unittest.mock import Mock
 
 from parameterized import parameterized
 
-from known_side_effects.exceptions import UnmatchedArguments
-from known_side_effects.matchers.types import Any, NotNone
-from known_side_effects.types import given
+from known_side_effects import UnmatchedArguments
+from known_side_effects import Any, NotNone
+from known_side_effects import when
 
 
 class TestBasicArguments(TestCase):
@@ -35,11 +35,11 @@ class TestBasicArguments(TestCase):
         ),
     ])
     def test_args(self, arguments, response):
-        given(self.mock).when(*arguments).then(response)
+        when(self.mock, *arguments).then(response)
         self.assertEqual(self.mock(*arguments), response)
 
     def test_order_breaks_matching_args(self):
-        given(self.mock).when('2', 1).then(Mock())
+        when(self.mock, '2', 1).then(Mock())
 
         with self.assertRaises(UnmatchedArguments) as raised:
             self.mock(1, '2')
@@ -53,7 +53,7 @@ class TestBasicArguments(TestCase):
         )
 
     def test_error_raised_on_no_match_args(self):
-        given(self.mock).when(Mock()).then(Mock())
+        when(self.mock, Mock()).then(Mock())
 
         with self.assertRaises(UnmatchedArguments) as raised:
             argument = Mock()
@@ -68,7 +68,7 @@ class TestBasicArguments(TestCase):
 
     def test_error_raised_on_argument_length_mismatch_args(self):
         argument = Mock()
-        given(self.mock).when(argument).then(Mock())
+        when(self.mock, argument).then(Mock())
 
         with self.assertRaises(UnmatchedArguments) as raised:
             self.mock(argument, '1')
@@ -81,7 +81,6 @@ class TestBasicArguments(TestCase):
             )
 
 
-
 class TestMatcherArguments(TestCase):
     def setUp(self):
         self.mock = Mock()
@@ -89,7 +88,7 @@ class TestMatcherArguments(TestCase):
     def test_single_matcher_argument_args(self):
         response = Mock()
 
-        given(self.mock).when(Any()).then(response)
+        when(self.mock, Any()).then(response)
 
         self.assertEqual(
             self.mock(object()),
@@ -99,7 +98,7 @@ class TestMatcherArguments(TestCase):
     def test_matcher_argument_and_basic_argument_args(self):
         response = Mock()
         argument_1 = Mock()
-        given(self.mock).when(argument_1, Any()).then(response)
+        when(self.mock, argument_1, Any()).then(response)
 
         self.assertEqual(
             self.mock(argument_1, object()),
@@ -110,7 +109,7 @@ class TestMatcherArguments(TestCase):
         response = Mock()
         argument_1 = Mock()
 
-        given(self.mock).when(argument_1, Any()).then(response)
+        when(self.mock, argument_1, Any()).then(response)
 
         bad_argument_1 = object()
         with self.assertRaises(UnmatchedArguments) as raised:
@@ -125,7 +124,7 @@ class TestMatcherArguments(TestCase):
         )
 
     def test_error_raised_on_no_match_args(self):
-        given(self.mock).when(NotNone()).then(Mock())
+        when(self.mock, NotNone()).then(Mock())
 
         with self.assertRaises(UnmatchedArguments) as raised:
             argument = None
