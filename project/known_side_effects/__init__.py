@@ -26,7 +26,7 @@ from unittest.mock import Mock
 from known_side_effects.exceptions import UnmatchedArguments
 from known_side_effects.types import SideEffectGenerator
 from known_side_effects.matchers.types import (
-    Any,
+    AnyArg,
     NotNone,
     AnyX,
     AnyString,
@@ -43,7 +43,7 @@ __all__ = [
     'reset',
     'when',
     'UnmatchedArguments',
-    'Any',
+    'AnyArg',
     'NotNone',
     'AnyX',
     'AnyString',

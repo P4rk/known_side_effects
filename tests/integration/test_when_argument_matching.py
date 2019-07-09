@@ -4,7 +4,7 @@ from unittest.mock import Mock
 from parameterized import parameterized
 
 from known_side_effects import UnmatchedArguments
-from known_side_effects import Any, NotNone
+from known_side_effects import AnyArg, NotNone
 from known_side_effects import when
 
 
@@ -88,7 +88,7 @@ class TestMatcherArguments(TestCase):
     def test_single_matcher_argument_args(self):
         response = Mock()
 
-        when(self.mock, Any()).then(response)
+        when(self.mock, AnyArg()).then(response)
 
         self.assertEqual(
             self.mock(object()),
@@ -98,7 +98,7 @@ class TestMatcherArguments(TestCase):
     def test_matcher_argument_and_basic_argument_args(self):
         response = Mock()
         argument_1 = Mock()
-        when(self.mock, argument_1, Any()).then(response)
+        when(self.mock, argument_1, AnyArg()).then(response)
 
         self.assertEqual(
             self.mock(argument_1, object()),
@@ -109,7 +109,7 @@ class TestMatcherArguments(TestCase):
         response = Mock()
         argument_1 = Mock()
 
-        when(self.mock, argument_1, Any()).then(response)
+        when(self.mock, argument_1, AnyArg()).then(response)
 
         bad_argument_1 = object()
         with self.assertRaises(UnmatchedArguments) as raised:

@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
-from known_side_effects import Any
+from known_side_effects import AnyArg
 from known_side_effects import when
 
 
@@ -12,7 +12,7 @@ class TestReturnValues(TestCase):
 
     def test_returns_non_exception(self):
         response = Mock()
-        when(self.mock, Any()).then(response)
+        when(self.mock, AnyArg()).then(response)
 
         self.assertEqual(
             self.mock('1'),
@@ -26,7 +26,7 @@ class TestRaiseValues(TestCase):
 
     def test_raises_exception(self):
         response = Exception('Test Exception')
-        when(self.mock, Any()).then(response)
+        when(self.mock, AnyArg()).then(response)
 
         with self.assertRaises(Exception) as raised:
             self.mock('1')
@@ -44,7 +44,7 @@ class TestMultipleValues(TestCase):
         self.response_1 = Mock()
         self.response_2 = Mock()
         self.response_3 = Exception('test exception')
-        when(self.mock, Any()).then(
+        when(self.mock, AnyArg()).then(
             self.response_1,
         ).then(
             self.response_2,

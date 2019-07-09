@@ -62,7 +62,7 @@ The `then` function specifies what the known side effect should do when paramete
 
 ```python
 from unittest.mock import Mock
-from known_side_effects import when, Any
+from known_side_effects import when, AnyArg
 ...
 response_one = Mock()
 mock = Mock()
@@ -76,7 +76,7 @@ However if the parameter is an instance of an exception then, when the known sid
 
 ```python
 from unittest.mock import Mock
-from known_side_effects import when, Any
+from known_side_effects import when, AnyArg
 ...
 exception = Exception()
 mock = Mock()
@@ -90,7 +90,7 @@ Each response will be returned once until the last response. Once the last respo
 
 ```python
 from unittest.mock import Mock
-from known_side_effects import when, Any
+from known_side_effects import when, AnyArg
 ...
 exception = Exception()
 response_one = Mock()
@@ -128,7 +128,7 @@ When calling the `mock` after specifying multiple known side effects, the first 
 
 ```python
 from unittest.mock import Mock
-from known_side_effects import when, Any
+from known_side_effects import when, AnyArg
 ...
 response_one = Mock()
 response_two = Mock()
@@ -136,7 +136,7 @@ argument_one = Mock()
 argument_two = Mock()
 
 when(mock, argument_one).then(response_one)
-when(mock, Any()).then(response_two)
+when(mock, AnyArg()).then(response_two)
 ...
 assert mock(argument_one) == response_one
 assert mock(argument_two) == response_two
@@ -146,14 +146,14 @@ If the order of the known side effects were reversed, the mock would only ever r
 
 ```python
 from unittest.mock import Mock
-from known_side_effects import when, Any
+from known_side_effects import when, AnyArg
 ...
 response_one = Mock()
 response_two = Mock()
 argument_one = Mock()
 argument_two = Mock()
 
-when(mock, Any()).then(response_two)        # These two lines have swapped
+when(mock, AnyArg()).then(response_two)        # These two lines have swapped
 when(mock, argument_one).then(response_one) # These two lines have swapped
 
 ...

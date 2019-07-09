@@ -1,7 +1,7 @@
 from parameterized import parameterized
 
 from known_side_effects import (
-    Any,
+    AnyArg,
     NotNone,
     AnyString,
     AnyTuple,
@@ -18,7 +18,7 @@ from known_side_effects import (
     ('test',),
 ])
 def test_any_match(item):
-    assert Any().matches(item)
+    assert AnyArg().matches(item)
 
 
 def test_any_mismatch():

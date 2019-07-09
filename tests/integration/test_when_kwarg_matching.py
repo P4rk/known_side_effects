@@ -4,7 +4,7 @@ from unittest.mock import Mock
 from parameterized import parameterized
 
 from known_side_effects import UnmatchedArguments
-from known_side_effects import Any, NotNone
+from known_side_effects import AnyArg, NotNone
 from known_side_effects import when
 
 
@@ -99,7 +99,7 @@ class TestMatcherKwargs(TestCase):
     def test_single_matcher_kwarg(self):
         response = Mock()
 
-        when(self.mock, arg=Any()).then(response)
+        when(self.mock, arg=AnyArg()).then(response)
 
         self.assertEqual(
             self.mock(arg=object()),
@@ -109,7 +109,7 @@ class TestMatcherKwargs(TestCase):
     def test_matcher_kwarg_and_basic_kwargs(self):
         response = Mock()
         argument_1 = Mock()
-        when(self.mock, arg=argument_1, arg1=Any()).then(response)
+        when(self.mock, arg=argument_1, arg1=AnyArg()).then(response)
 
         self.assertEqual(
             self.mock(arg=argument_1, arg1=object()),
@@ -120,7 +120,7 @@ class TestMatcherKwargs(TestCase):
         response = Mock()
         argument_1 = Mock()
 
-        when(self.mock, arg=argument_1, arg1=Any()).then(response)
+        when(self.mock, arg=argument_1, arg1=AnyArg()).then(response)
 
         self.assertEqual(
             self.mock(arg1=object(), arg=argument_1),

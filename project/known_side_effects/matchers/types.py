@@ -28,12 +28,12 @@ from abc import ABC
 from hamcrest.core.matcher import Matcher
 
 
-class Any(Matcher):
+class AnyArg(Matcher):
     def matches(self, item, mismatch_description=None):
         return True
 
     def describe_mismatch(self, item, mismatch_description):
-        return f'Any Match should match {item}'
+        return f'AnyArg Match should match {item}'
 
     def describe_to(self, description):
         description.append_text('Matches any item')
