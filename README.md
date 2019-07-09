@@ -2,8 +2,12 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/393832636c36453eb382b56b4f6dcb0f)](https://www.codacy.com/app/P4rk/known_side_effects?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=P4rk/known_side_effects&amp;utm_campaign=Badge_Grade)
 [![Coverage Badge](https://img.shields.io/badge/coverage-95%25-lgreen.svg)](https://shields.io/)
-[![Python version badge](https://img.shields.io/badge/python-3.6+-blue.svg)](https://shields.io/)
-[![Licence badge](https://img.shields.io/badge/license-MIT-green.svg)](https://shields.io/)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/known-side-effects.svg)](https://pypi.python.org/pypi/known-side-effects/)
+[![PyPI version fury.io](https://badge.fury.io/py/known-side-effects.svg)](https://pypi.python.org/pypi/known-side-effects/)
+[![PyPI license](https://img.shields.io/pypi/l/known-side-effects.svg)](https://pypi.python.org/pypi/known-side-effects/)
+
+
+
 
 
 A test utility library to help write explict side effects for mocked objects.
