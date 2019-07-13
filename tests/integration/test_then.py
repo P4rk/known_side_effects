@@ -25,7 +25,7 @@ class TestRaiseValues(TestCase):
 
     def test_raises_exception(self):
         response = Exception('Test Exception')
-        self.mock.when(AnyArg()).then(response)
+        self.mock.when(AnyArg()).then_raise(response)
 
         with self.assertRaises(Exception) as raised:
             self.mock('1')
@@ -47,7 +47,7 @@ class TestMultipleValues(TestCase):
             self.response_1,
         ).then(
             self.response_2,
-        ).then(
+        ).then_raise(
             self.response_3,
         )
 

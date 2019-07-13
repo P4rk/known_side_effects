@@ -58,7 +58,7 @@ mock.when(...).then(response_one)
 assert mock(...) == response_one
 ```
 
-However if the parameter is an instance of an exception then, when the known side effect is matched the exception will be raised instead of returned.s
+To raise an exception rather that return a value call `then_raise` rather than `then`. An exception will be raised instead of returned.
 
 ```python
 from unittest.mock import Mock
@@ -66,7 +66,7 @@ from unittest.mock import Mock
 exception = Exception()
 mock = Mock()
 
-mock.when(...).then(exception)
+mock.when(...).then_raise(exception)
 
 mock(...)  # Raises the exception
 ```
@@ -80,7 +80,7 @@ exception = Exception()
 response_one = Mock()
 mock = Mock()
 
-mock.when(...).then(response_one).then(exception)
+mock.when(...).then(response_one).then_raise(exception)
 
 assert mock(...) == response_one
 mock(...)  # Raises the exception

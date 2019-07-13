@@ -60,7 +60,11 @@ class When:
         return args_match and kwargs_match
 
     def then(self, response):
-        self._responses.append(response)
+        self._responses.append((False, response))
+        return self
+
+    def then_raise(self, response):
+        self._responses.append((True, response))
         return self
 
     def get_response(self):
@@ -68,6 +72,7 @@ class When:
         if len(self._responses) > 1:
             response = self._responses.pop(0)
 
-        if isinstance(response, Exception):
+        should_raise, response = response
+        if should_raise:
             raise response
         return response
