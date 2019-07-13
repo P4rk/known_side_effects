@@ -5,7 +5,6 @@ from parameterized import parameterized
 
 from known_side_effects import UnmatchedArguments
 from known_side_effects import AnyArg, NotNone
-from known_side_effects import when
 
 
 class TestBasicKwargs(TestCase):
@@ -34,7 +33,7 @@ class TestBasicKwargs(TestCase):
         ), Mock()),
     ])
     def test_kwargs(self, kwargs, response):
-        when(self.mock, **kwargs).then(response)
+        self.mock.when(**kwargs).then(response)
         self.assertEqual(self.mock(**kwargs), response)
 
     def test_order_does_not_breaks_matching_kwargs(self):
@@ -42,7 +41,7 @@ class TestBasicKwargs(TestCase):
         Re arranging kwargs should have no effect
         """
         response = Mock()
-        when(self.mock, arg_1='2', arg_2=1).then(response)
+        self.mock.when(arg_1='2', arg_2=1).then(response)
 
         self.assertEqual(
             self.mock(arg_2=1, arg_1='2'),
@@ -50,7 +49,7 @@ class TestBasicKwargs(TestCase):
         )
 
     def test_error_raised_on_no_match_same_keyword(self):
-        when(self.mock, arg_1=Mock()).then(Mock())
+        self.mock.when(arg_1=Mock()).then(Mock())
 
         with self.assertRaises(UnmatchedArguments) as raised:
             argument = Mock()
@@ -64,7 +63,7 @@ class TestBasicKwargs(TestCase):
             )
 
     def test_error_raised_on_no_match_different_keyword(self):
-        when(self.mock, arg_1=Mock()).then(Mock())
+        self.mock.when(arg_1=Mock()).then(Mock())
 
         with self.assertRaises(UnmatchedArguments) as raised:
             argument = Mock()
@@ -79,7 +78,7 @@ class TestBasicKwargs(TestCase):
 
     def test_error_raised_on_argument_length_mismatch_args(self):
         argument = Mock()
-        when(self.mock, arg=argument).then(Mock())
+        self.mock.when(arg=argument).then(Mock())
 
         with self.assertRaises(UnmatchedArguments) as raised:
             self.mock(arg=argument, arg1='1')
@@ -99,7 +98,7 @@ class TestMatcherKwargs(TestCase):
     def test_single_matcher_kwarg(self):
         response = Mock()
 
-        when(self.mock, arg=AnyArg()).then(response)
+        self.mock.when(arg=AnyArg()).then(response)
 
         self.assertEqual(
             self.mock(arg=object()),
@@ -109,7 +108,7 @@ class TestMatcherKwargs(TestCase):
     def test_matcher_kwarg_and_basic_kwargs(self):
         response = Mock()
         argument_1 = Mock()
-        when(self.mock, arg=argument_1, arg1=AnyArg()).then(response)
+        self.mock.when(arg=argument_1, arg1=AnyArg()).then(response)
 
         self.assertEqual(
             self.mock(arg=argument_1, arg1=object()),
@@ -120,7 +119,7 @@ class TestMatcherKwargs(TestCase):
         response = Mock()
         argument_1 = Mock()
 
-        when(self.mock, arg=argument_1, arg1=AnyArg()).then(response)
+        self.mock.when(arg=argument_1, arg1=AnyArg()).then(response)
 
         self.assertEqual(
             self.mock(arg1=object(), arg=argument_1),
@@ -128,7 +127,7 @@ class TestMatcherKwargs(TestCase):
         )
 
     def test_error_raised_on_no_match_kwargs(self):
-        when(self.mock, arg=NotNone()).then(Mock())
+        self.mock.when(arg=NotNone()).then(Mock())
 
         with self.assertRaises(UnmatchedArguments) as raised:
             argument = None

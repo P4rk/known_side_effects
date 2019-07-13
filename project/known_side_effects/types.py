@@ -28,7 +28,7 @@ from known_side_effects.matchers.parameter_matchers import (
 )
 
 
-class SideEffectGenerator:
+class SideEffectFactory:
     def __init__(self):
         self.whens = []
 
