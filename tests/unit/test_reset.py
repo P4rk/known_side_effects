@@ -2,7 +2,7 @@ from unittest import TestCase
 from unittest.mock import Mock
 
 from known_side_effects import UnmatchedArguments
-from known_side_effects import when, reset
+from known_side_effects import reset
 
 
 class ResettingMocksTestCase(TestCase):
@@ -12,7 +12,7 @@ class ResettingMocksTestCase(TestCase):
         argument = Mock()
         response = Mock()
 
-        when(self.mock, argument).then(response)
+        self.mock.when(argument).then(response)
 
         self.assertEqual(
             self.mock(argument),

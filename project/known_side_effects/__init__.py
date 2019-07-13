@@ -24,7 +24,7 @@ SOFTWARE.
 from unittest.mock import Mock
 
 from known_side_effects.exceptions import UnmatchedArguments
-from known_side_effects.types import SideEffectGenerator
+from known_side_effects.types import SideEffectFactory
 from known_side_effects.matchers.types import (
     AnyArg,
     NotNone,
@@ -41,7 +41,6 @@ from known_side_effects.matchers.types import (
 
 __all__ = [
     'reset',
-    'when',
     'UnmatchedArguments',
     'AnyArg',
     'NotNone',
@@ -57,26 +56,14 @@ __all__ = [
 ]
 
 
-mock_to_seg = dict()
-
-
-def _given(mock: Mock):
-    global mock_to_seg
-    seg = mock_to_seg.get(mock, SideEffectGenerator())
-    mock.side_effect = seg
-    mock_to_seg[mock] = seg
-    return seg
+def _given(mock: Mock, *args, **kwargs):
+    if not mock.side_effect:
+        mock.side_effect = SideEffectFactory()
+    return mock.side_effect.when(*args, **kwargs)
 
 
 def reset(mock: Mock):
-    global mock_to_seg
-    seg = mock_to_seg[mock]
-    seg.whens = []
+    mock.side_effect = SideEffectFactory()
 
 
-def when(mock: Mock, *args, **kwargs):
-    if not isinstance(mock, Mock):
-        raise AssertionError(
-            f'First argument to when is expected to be a Mock. It was {mock}'
-        )
-    return _given(mock).when(*args, **kwargs)
+Mock.when = _given
