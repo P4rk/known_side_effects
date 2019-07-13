@@ -15,29 +15,18 @@ A test utility library to help write explict side effects for mocked objects.
 Mocks side effects are manipulated by `when` and `then` functions.
 
 ```python
-from known_side_effects import when
-...
-when(...).then(...)
-```
-You manipulate a specific mocks side effect by passing them to the first parameter in the when function.
-
-```python
-from known_side_effects import when
-...
-when(mock, ...).then(...)
+mock.when(...).then(...)
 ```
 ## When
 
-All parameters in the `when` function after the mock, are used to define the expected parameters for the side effect.
+All parameters in the `when` function are used to define the expected parameters for the side effect.
 
 ```python
-from known_side_effects import when
-...
-when(mock, 'argument_one', arg='argument_two').then(...)
+mock.when('argument_one', arg='argument_two').then(...)
 ```
 If the mock is called with parameters that don't match any of the specified parameter sets then an `UnmatchedArguments` exception is raised. The arguments have to match exactly.
 
-E.g. Given `when(mock, 'argument_one', arg='argument_two').then(...)` when the mock is called with the parameters in the table below an `UnmatchedArguments` is either raised or not raised. 
+E.g. Given `mock.when('argument_one', arg='argument_two').then(...)` when the mock is called with the parameters in the table below an `UnmatchedArguments` is either raised or not raised. 
 
 | Parameters 									     | Raises |
 |--------------------------------------------|--------|
@@ -49,11 +38,9 @@ E.g. Given `when(mock, 'argument_one', arg='argument_two').then(...)` when the m
 Multiple sets of parameters to match can be specified.
 
 ```python
-from known_side_effects import when
-...
-when(mock, 'first_specified_argument').then(...)
-when(mock, 'second_specified_argument').then(...)
-when(mock, 'third_specified_argument').then(...)
+mock.when('first_specified_argument').then(...)
+mock.when('second_specified_argument').then(...)
+mock.when('third_specified_argument').then(...)
 ```
 
 
@@ -62,12 +49,11 @@ The `then` function specifies what the known side effect should do when paramete
 
 ```python
 from unittest.mock import Mock
-from known_side_effects import when, AnyArg
 ...
 response_one = Mock()
 mock = Mock()
 
-when(mock, ...).then(response_one)
+mock.when(...).then(response_one)
 
 assert mock(...) == response_one
 ```
@@ -76,12 +62,11 @@ However if the parameter is an instance of an exception then, when the known sid
 
 ```python
 from unittest.mock import Mock
-from known_side_effects import when, AnyArg
 ...
 exception = Exception()
 mock = Mock()
 
-when(mock, ...).then(exception)
+mock.when(...).then(exception)
 
 mock(...)  # Raises the exception
 ```
@@ -90,13 +75,12 @@ Each response will be returned once until the last response. Once the last respo
 
 ```python
 from unittest.mock import Mock
-from known_side_effects import when, AnyArg
 ...
 exception = Exception()
 response_one = Mock()
 mock = Mock()
 
-when(mock, ...).then(response_one).then(exception)
+mock.when(...).then(response_one).then(exception)
 
 assert mock(...) == response_one
 mock(...)  # Raises the exception
@@ -110,12 +94,12 @@ You can reset the the known side effects on a mock by passing it the `reset` fun
 ```python
  
 from unittest.mock import Mock
-from known_side_effects import when, reset
+from known_side_effects import reset
 ...
 
 mock = Mock()
 
-when(mock, ...).then(...)
+mock.when(...).then(...)
 
 reset(mock)
 
@@ -128,15 +112,15 @@ When calling the `mock` after specifying multiple known side effects, the first 
 
 ```python
 from unittest.mock import Mock
-from known_side_effects import when, AnyArg
+from known_side_effects import AnyArg
 ...
 response_one = Mock()
 response_two = Mock()
 argument_one = Mock()
 argument_two = Mock()
 
-when(mock, argument_one).then(response_one)
-when(mock, AnyArg()).then(response_two)
+mock.when(argument_one).then(response_one)
+mock.when(AnyArg()).then(response_two)
 ...
 assert mock(argument_one) == response_one
 assert mock(argument_two) == response_two
@@ -146,15 +130,15 @@ If the order of the known side effects were reversed, the mock would only ever r
 
 ```python
 from unittest.mock import Mock
-from known_side_effects import when, AnyArg
+from known_side_effects import AnyArg
 ...
 response_one = Mock()
 response_two = Mock()
 argument_one = Mock()
 argument_two = Mock()
 
-when(mock, AnyArg()).then(response_two)        # These two lines have swapped
-when(mock, argument_one).then(response_one) # These two lines have swapped
+mock.when(AnyArg()).then(response_two)        # These two lines have swapped
+mock.when(argument_one).then(response_one) # These two lines have swapped
 
 ...
 # This will raise an AssertionError as calling the mock with argument_one now
