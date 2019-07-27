@@ -43,6 +43,17 @@ mock.when('second_specified_argument').then(...)
 mock.when('third_specified_argument').then(...)
 ```
 
+#### Chaining
+Calling the when function with exactly the same arguments will allow you to append to the responses.
+
+```python
+mock.when('arg').then('response_one')
+mock.when('arg').then('response_two')
+```
+is the same as
+```python
+mock.when('arg').then('response_one').then('response_two')
+```
 
 ## Then
 The `then` function specifies what the known side effect should do when parameters are matched. By default it will just return what has been passed into the `then` function. 

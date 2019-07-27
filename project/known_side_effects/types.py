@@ -21,29 +21,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+from known_side_effects.argument_matcher import called_arguments_match, when_arguments_match
 from known_side_effects.exceptions import UnmatchedArguments
-from known_side_effects.matchers.parameter_matchers import (
-    match_arguments,
-    match_kwarg,
-)
 
 
 class SideEffectFactory:
     def __init__(self):
-        self.whens = []
+        self._whens = []
 
     def when(self, *arguments, **kwargs):
+        # Attempt to match arguments and return that when rather
+        # creating a new one
+        for when in self._whens:
+            if when_arguments_match(when, arguments, kwargs):
+                return when
+
         when = When(self, arguments, kwargs)
-        self.whens.append(when)
+        self._whens.append(when)
         return when
+
+    def return_or_raise(self, response):
+        should_raise, response = response
+        if should_raise:
+            raise response
+        return response
 
     def __call__(self, *args, **kwargs):
         """
         side_effect
         """
-        for when in self.whens:
-            if when.arguments_match(args, kwargs):
-                return when.get_response()
+        for when in self._whens:
+            if called_arguments_match(when, args, kwargs):
+                response = when.get_response()
+                return self.return_or_raise(response)
         raise UnmatchedArguments(*args, **kwargs)
 
 
@@ -53,11 +63,6 @@ class When:
         self.expected_kwargs = expected_kwargs
         self.parent_side_effect = parent_side_effect
         self._responses = []
-
-    def arguments_match(self, arguments, kwargs):
-        args_match = match_arguments(self.expected_arguments, arguments)
-        kwargs_match = match_kwarg(self.expected_kwargs, kwargs)
-        return args_match and kwargs_match
 
     def then(self, response):
         self._responses.append((False, response))
@@ -71,8 +76,4 @@ class When:
         response = self._responses[0]
         if len(self._responses) > 1:
             response = self._responses.pop(0)
-
-        should_raise, response = response
-        if should_raise:
-            raise response
         return response
