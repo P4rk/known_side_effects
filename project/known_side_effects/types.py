@@ -28,6 +28,8 @@ from known_side_effects.exceptions import UnmatchedArguments
 class SideEffectFactory:
     def __init__(self):
         self._whens = []
+        self._otherwise = None
+        self._always = None
 
     def when(self, *arguments, **kwargs):
         # Attempt to match arguments and return that when rather
@@ -50,10 +52,16 @@ class SideEffectFactory:
         """
         side_effect
         """
+        if self._always:
+            return self.return_or_raise(self._always)
         for when in self._whens:
             if called_arguments_match(when, args, kwargs):
                 response = when.get_response()
                 return self.return_or_raise(response)
+
+        if self._otherwise:
+            return self.return_or_raise(self._otherwise)
+
         raise UnmatchedArguments(*args, **kwargs)
 
 
@@ -77,3 +85,15 @@ class When:
         if len(self._responses) > 1:
             response = self._responses.pop(0)
         return response
+
+    def otherwise(self, response):
+        self.parent_side_effect._otherwise = (False, response)
+
+    def otherwise_raise(self, response):
+        self.parent_side_effect._otherwise = (True, response)
+
+    def always(self, response):
+        self.parent_side_effect._always = (False, response)
+
+    def always_raise(self, response):
+        self.parent_side_effect._always = (True, response)

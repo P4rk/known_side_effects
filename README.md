@@ -98,6 +98,35 @@ mock(...)  # Raises the exception
 mock(...)  # Raises the exception
 ```
 
+## Otherwise
+
+You can specify default return values on a mock by calling otherwise. If the mock is called without 
+matching any arguments then the otherwise value will returned.
+```python
+mock.when('arg').then(...).otherwise('otherwise')
+
+assert mock('not arg') == 'otherwise'
+```
+You can also raise an exception by default
+```python
+mock.when(...).then(...).otherwise_raise(Exception())
+```
+
+
+## Always
+
+You can specify the mock to always return the same response regardless of what arguments it is called with.
+```python
+mock.when().always('response')
+
+assert mock(...) == 'response'
+```
+You can also raise an exception
+```python
+mock.when().always_raise(Exception())
+```
+
+
 ## Reset
 
 You can reset the the known side effects on a mock by passing it the `reset` function.
