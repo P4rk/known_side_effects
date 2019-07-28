@@ -2,9 +2,11 @@
 source = project
 omit =
     ./env/**
+    */setup.py
 branch = true
 
 [report]
 fail_under = 85
 omit=
     ./env/**
+    */setup.py

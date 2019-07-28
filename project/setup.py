@@ -6,7 +6,7 @@ with open("../README.md", "r") as fh:
 
 setuptools.setup(
     name="known_side_effects",
-    version="0.0.1",
+    version="0.1.0",
     author="Luke Park",
     author_email="luke@p4rk.dev",
     description="A test utility library to help write explict side effects for mocked "
