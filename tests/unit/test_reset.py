@@ -1,8 +1,13 @@
 from unittest import TestCase
+import known_side_effects
+
 from unittest.mock import Mock
 
 from known_side_effects import UnmatchedArguments
 from known_side_effects import reset
+
+
+known_side_effects.extend(Mock)
 
 
 class ResettingMocksTestCase(TestCase):

@@ -1,7 +1,12 @@
+import known_side_effects
+
 from unittest import TestCase
 from unittest.mock import Mock
 
 from known_side_effects import AnyArg
+
+
+known_side_effects.extend(Mock)
 
 
 class WhenAppendingTestCase(TestCase):

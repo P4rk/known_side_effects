@@ -17,6 +17,16 @@ Mocks side effects are manipulated by `when` and `then` functions.
 ```python
 mock.when(...).then(...)
 ```
+
+To enable this extend the mock class in you tests.
+
+```python
+import known_side_effects
+from unittest.mock import Mock
+...
+known_side_effects.extend(Mock)
+```
+
 ## When
 
 All parameters in the `when` function are used to define the expected parameters for the side effect.

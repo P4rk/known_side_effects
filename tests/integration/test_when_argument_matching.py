@@ -1,10 +1,14 @@
 from unittest import TestCase
-from unittest.mock import Mock
+import known_side_effects
 
+from unittest.mock import Mock
 from parameterized import parameterized
 
 from known_side_effects import UnmatchedArguments
 from known_side_effects import AnyArg, NotNone
+
+
+known_side_effects.extend(Mock)
 
 
 class TestBasicArguments(TestCase):

@@ -66,4 +66,5 @@ def reset(mock: Mock):
     mock.side_effect = SideEffectFactory()
 
 
-Mock.when = _given
+def extend(cls):
+    cls.when = _given
